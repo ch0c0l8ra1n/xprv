@@ -1,55 +1,93 @@
-// src/core/json-route-node.ts
-
+import z from "zod";
+import { json } from "./json-response";
 import { JsonRouteHandler } from "./json-route-handler";
-import {z} from "zod";
-import { JsonResponse } from "./json-reponse";
+import { handler } from "./json-route-handler-builder";
+import { HttpMethod } from "./types/http";
 
-export type RouteHandlerMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
+export type JsonRouteHandlers = Partial<{
+    [key in HttpMethod]: JsonRouteHandler<any, any, any>;
+}>
 
-export type JsonRouteHandlers = {
-    [key in RouteHandlerMethod]: JsonRouteHandler<JsonResponse<any, any, any>, any, any, any, any>;
+export interface JsonRouteNode<
+    TPath extends string,
+    THandlers extends JsonRouteHandlers,
+    TChildren extends JsonRouteNode<any, any, any>[],
+> {
+    path: TPath;
+    handlers: THandlers;
+    children: TChildren;
 }
 
-interface JsonRouteNodeOptions{
-    children: JsonRouteNode[];
-    handlers: Partial<JsonRouteHandlers>;
+
+export interface JsonRouteNodeOptions<
+    TPath extends string,
+    THandlers extends JsonRouteHandlers,
+    TChildren extends JsonRouteNode<any, any, any>[],
+> {
+    path: TPath;
+    handlers?: THandlers;
+    children?: TChildren;
 }
 
-class JsonRouteNode{
-    children: JsonRouteNode[];
-    handlers: Partial<JsonRouteHandlers>;
 
-    constructor(options: JsonRouteNodeOptions){
-        this.children = options.children;
-        this.handlers = options.handlers;
+export function node<
+    TPath extends string,
+    THandlers extends JsonRouteHandlers = {},
+    TChildren extends JsonRouteNode<any, any, any>[] = [],
+>(options: JsonRouteNodeOptions<TPath, THandlers, TChildren>)
+    : JsonRouteNode<TPath, THandlers, TChildren> {
+    return {
+        path: options.path,
+        handlers: options.handlers ?? {} as THandlers,
+        children: options.children ?? [] as JsonRouteNode<any, any, any>[] as TChildren,
     }
 }
 
 
-const jrh = new JsonRouteHandler({
-    schemas: {
-        headers: z.object({
-            dummyHeader: z.string().optional()
-        }),
-    },
-    method: async ({headers, params, query, body}) => {
-        return new JsonResponse({ status: 200, body: { message: "Dummy" } });
+const pingNode = node({
+    path: "/ping",
+    handlers: {
+        get: handler.handle((input, context) => {
+            return json({
+                status: 200,
+                body: {
+                    message: "Pong"
+                }
+            })
+        })
     }
 });
 
-const jrn = new JsonRouteNode({
-    children: [],
+const sumNode = node({
+    path: "/sum",
     handlers: {
-        get: new JsonRouteHandler({
-            schemas: {
-                headers: z.object({
-                    dummyHeader: z.string().optional()
-                }),
-            },
-            method: async ({headers, params, query, body}) => {
-                return new JsonResponse({ status: 200, body: { message: "Dummy" } });
-            }
-        }),
-        post: jrh
+        post: handler
+            .withInput({
+                body: z.object({
+                    a: z.number(),
+                    b: z.number()
+                })
+            })
+            .handle((input, context) => {
+                return json({
+                    status: 200,
+                    body: {
+                        message: "Sum",
+                        result: input.body.a + input.body.b
+                    }
+                })
+            })
     }
+});
+
+
+const utilsNode = node({
+    path: "/utils",
+    children: [pingNode, sumNode]
+});
+
+
+const rootNode = node({
+    path: "/",
+    children: [utilsNode]
 });
