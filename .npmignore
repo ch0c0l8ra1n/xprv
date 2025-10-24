@@ -1,4 +1,6 @@
 dist/
 dist-scripts/
 node_modules/
+src/
 .gitignore
+.npmignore
