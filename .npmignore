@@ -1,0 +1,4 @@
+dist/
+dist-scripts/
+node_modules/
+.gitignore
