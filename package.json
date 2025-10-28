@@ -1,11 +1,34 @@
 {
   "name": "xprv",
   "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
+  "description": "Type-safe Express.js framework with automatic OpenAPI generation and client SDK",
+  "license": "MIT",
   "author": "rajatparajuli5@gmail.com",
+  "keywords": [
+    "typescript",
+    "express",
+    "type-safe",
+    "openapi",
+    "api",
+    "rest",
+    "zod",
+    "validation",
+    "framework",
+    "type-safety"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ch0c0l8ra1n/xprv.git"
+  },
   "type": "commonjs",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "dist-scripts/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepack": "npm run build && npm run build:scripts",
