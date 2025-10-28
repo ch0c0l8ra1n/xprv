@@ -1,7 +1,8 @@
-// src/demo/server.ts
+// example/server.ts
 
-import xprv from "../index";
+import xprv from "xprv";
 import express from "express";
+import z from "zod";
 
 
 const pingNode = xprv.node({
@@ -26,10 +27,10 @@ const calculatorNode = xprv.node({
 	handlers: {
 		post: xprv.handler
 			.withInput({
-				body: xprv.z.object({
-					a: xprv.z.number(),
-					b: xprv.z.number(),
-					operation: xprv.z.enum([
+				body: z.object({
+					a: z.number(),
+					b: z.number(),
+					operation: z.enum([
 						"add",
 						"subtract",
 						"multiply",

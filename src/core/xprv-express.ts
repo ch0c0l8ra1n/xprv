@@ -120,9 +120,9 @@ export function buildRouter({ rootNode, errorHandlers }: BuildRouterOptions) {
 	}
 
 	// If there is at least one handler, rest should be method not allowed
+	// The 404 handler will catch it otherwise
 	if (Object.keys(rootNode.handlers).length > 0) {
-		router.all("/{*any}", (req, res) => {
-			console.log("Method not allowed", req.path);
+		router.all("/", (req, res) => {
 			const response = errorHandlers.onMethodNotAllowed(req, res);
 			res.status(response.status)
 				.setHeaders(new Map(Object.entries(response.headers)))

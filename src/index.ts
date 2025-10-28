@@ -10,7 +10,6 @@ const xprv = {
     handler,
     json,
     node,
-    z,
     app,
     Client
 }

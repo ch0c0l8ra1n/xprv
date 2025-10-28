@@ -78,7 +78,7 @@ export class XPRVApp<
   buildRouter(){
     const router = express.Router();
     router.use(express.json());
-    router.use(buildRouter({
+    router.use(this.rootNode.path,buildRouter({
       rootNode: this.rootNode,
       errorHandlers: this.errorHandlers,
     }));

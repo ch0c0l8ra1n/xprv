@@ -1,6 +1,12 @@
-dist/
 dist-scripts/
+scripts/
 node_modules/
 src/
 .gitignore
 .npmignore
+.git
+tsconfig.json
+tsconfig.scripts.json
+package-lock.json
+todos.md
+example/

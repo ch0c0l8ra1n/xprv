@@ -1,6 +1,6 @@
 // src/demo/client.ts
 
-import xprv from "../index";
+import xprv from "xprv";
 import { xprvAppType } from "./server";
 
 const client = new xprv.Client<xprvAppType>({   
