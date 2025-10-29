@@ -1,6 +1,6 @@
 {
   "name": "xprv",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Type-safe Express.js framework with automatic OpenAPI generation and client SDK",
   "license": "MIT",
   "author": "rajatparajuli5@gmail.com",
