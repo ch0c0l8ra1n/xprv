@@ -1,9 +1,10 @@
 // src/demo/client.ts
 
-import xprv from "xprv";
 import { xprvAppType } from "./server";
 
-const client = new xprv.Client<xprvAppType>({   
+import {Client} from "xprv/client";
+
+const client = new Client<xprvAppType>({   
     baseUrl: "http://localhost:3000",
     fetchMethod: fetch,
     defaultHeaders: {
