@@ -1,6 +1,13 @@
 # Changelog
 
 
+
+### 1.0.5
+
+## Bug Fixes
+
+- Added some more missing types to the export
+
 ### 1.0.4
 
 ## Bug Fixes
