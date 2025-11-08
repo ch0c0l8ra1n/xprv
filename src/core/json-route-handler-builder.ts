@@ -55,7 +55,7 @@ export class JsonRouteHandlerBuilder<
     }
     
     handle<JRes extends JsonResponse<any,any,any>>(
-        method: (input: TInput, context: TContext) => JRes
+        method: (input: TInput, context: TContext) => Promise<JRes>
     ):JsonRouteHandler<JRes, TInput, TContext> {
         return {
             contextProvider: this.contextProvider,
@@ -63,7 +63,6 @@ export class JsonRouteHandlerBuilder<
             method
         }
     }
-
 
     static withContextProvider<TNewContext>(
         contextProvider: (request: Request, response: Response) => TNewContext
@@ -79,7 +78,7 @@ export class JsonRouteHandlerBuilder<
 
     static handle<
     const TResponse extends JsonResponse<any,any,any>
-    >(method: (input: JsonRequest<unknown, unknown, unknown, unknown>, context: {}) => TResponse) {
+    >(method: (input: JsonRequest<unknown, unknown, unknown, unknown>, context: {}) => Promise<TResponse>) {
         const builder = new JsonRouteHandlerBuilder({});
         return builder.handle(method)
     }
@@ -94,7 +93,7 @@ const builder = new JsonRouteHandlerBuilder({})
         query: z.unknown(),
         body: z.unknown()
     })
-    .handle((input, context) => {
+    .handle(async (input, context) => {
         return json({
             status: 200,
             body: {

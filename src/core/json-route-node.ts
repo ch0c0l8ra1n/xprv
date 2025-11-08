@@ -47,7 +47,7 @@ export function node<
 const pingNode = node({
     path: "/ping",
     handlers: {
-        get: handler.handle((input, context) => {
+        get: handler.handle(async (input, context) => {
             return json({
                 status: 200,
                 body: {
@@ -68,7 +68,7 @@ const sumNode = node({
                     b: z.number()
                 })
             })
-            .handle((input, context) => {
+            .handle(async (input, context) => {
                 return json({
                     status: 200,
                     body: {

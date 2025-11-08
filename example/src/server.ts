@@ -8,7 +8,7 @@ import z from "zod";
 const pingNode = xprv.node({
 	path: "/ping",
 	handlers: {
-		get: xprv.handler.handle(() => {
+		get: xprv.handler.handle(async () => {
 			return xprv.json({
 				status: 200,
 				body: {
@@ -38,7 +38,7 @@ const calculatorNode = xprv.node({
 					]),
 				}),
 			})
-			.handle((input, context) => {
+			.handle(async (input, context) => {
 				/*
                 (parameter) input: JsonRequest<unknown, unknown, unknown, {
                     a: number;

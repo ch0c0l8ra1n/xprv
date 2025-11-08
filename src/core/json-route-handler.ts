@@ -10,7 +10,7 @@ export interface JsonRouteHandlerOptions<
 > {
     contextProvider: (request: Request, response: Response) => TContext;
     schemas: JsonSchemas<TInput['headers'], TInput['params'], TInput['query'], TInput['body']>;
-    method: (input: TInput, context: TContext) => TResponse;
+    method: (input: TInput, context: TContext) => Promise<TResponse>;
 }
 
 
@@ -21,5 +21,5 @@ export interface JsonRouteHandler<
 > {
     contextProvider: (request: Request, response: Response) => TContext;
     schemas: JsonSchemas<TInput['headers'], TInput['params'], TInput['query'], TInput['body']>;
-    method: (input: TInput, context: TContext) => TResponse;
+    method: (input: TInput, context: TContext) => Promise<TResponse>;
 }
