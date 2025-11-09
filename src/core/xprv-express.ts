@@ -14,10 +14,11 @@ export function attachHandlerToRouter(
 	router[method]("/", async (req, res) => {
 		// parse the headers, query, params, and body
 
-		const headersResult = handler.schemas.headers.safeParse(req.headers);
-		const queryResult = handler.schemas.query.safeParse(req.query);
-		const paramsResult = handler.schemas.params.safeParse(req.params);
-		const bodyResult = handler.schemas.body.safeParse(req.body);
+		const headersResult = handler.schemas.headers.safeParse(req.headers || {});
+		const queryResult = handler.schemas.query.safeParse(req.query || {});
+		const paramsResult = handler.schemas.params.safeParse(req.params || {});
+		const bodyResult = handler.schemas.body.safeParse(req.body || {});
+
 
 		if (!headersResult.success) {
 			const response = errorHandlers.onValidationError(

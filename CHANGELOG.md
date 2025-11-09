@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.0.6
+
+## Bug Fixes
+
+- Fixed potential parsing errors in Express adapter when request properties (headers, query, params, body) are undefined. Now provides empty object fallbacks to ensure validation always receives valid input.
 
 
 ### 1.0.5
