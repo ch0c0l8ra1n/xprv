@@ -1,5 +1,39 @@
 # Changelog
 
+### 1.0.7
+
+## Breaking Changes
+
+### Default validation Error Path Format
+
+Default validation error paths are now returned as an array including the input location (headers, query, params, body) instead of a dot-separated string.
+
+**Before:**
+```json
+{
+  "error": "Validation Error",
+  "details": [
+    {
+      "path": "user.name",
+      "message": "Required"
+    }
+  ]
+}
+```
+
+**After:**
+```json
+{
+  "error": "Validation Error",
+  "details": [
+    {
+      "path": ["body", "user", "name"],
+      "message": "Required"
+    }
+  ]
+}
+```
+
 ### 1.0.6
 
 ## Bug Fixes

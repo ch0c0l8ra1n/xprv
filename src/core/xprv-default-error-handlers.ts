@@ -51,7 +51,7 @@ const defaultOnValidationError = (
         body: {
             error: "Validation Error",
             details: error.issues.map(e => ({
-                path: e.path.join("."),
+                path: [where, ...e.path.map(p => p.toString())],
                 message: e.message
             }))
         }

@@ -3,6 +3,7 @@
 import xprv from "xprv";
 import express from "express";
 import z from "zod";
+import { AddressInfo } from "net";
 
 
 const pingNode = xprv.node({
@@ -109,6 +110,18 @@ const app = express();
 
 app.use(router);
 
-app.listen(3001, () => {
-	console.log("Server is running on port 3001");
+
+const server = app.listen();
+
+
+server.on("error", (error) => {
+	console.error(error);
+});
+
+server.on("close", () => {
+	console.log("Server is closed");
+});
+
+server.on("listening", () => {
+	console.log("Server is listening on port", (server.address() as AddressInfo).port);
 });
